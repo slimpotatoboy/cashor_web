@@ -28,8 +28,8 @@ export const AppwriteService = {
     authCookies["a_session_" + AppwriteProject] = hash;
     client.headers["X-Fallback-Cookies"] = JSON.stringify(authCookies);
   },
-  getProduct: (slug) => {
-    return database.getDocument(process.env.NEXT_PUBLIC_DATABASE_ID, process.env.NEXT_PUBLIC_PRODUCT_ID, slug);
+  getProduct: async (slug) => {
+    return await database.getDocument(process.env.NEXT_PUBLIC_DATABASE_ID, process.env.NEXT_PUBLIC_PRODUCT_ID, slug);
   },
   readImage: (id) => {
     return storage.getFilePreview(process.env.NEXT_PUBLIC_STORAGE_ID, id);

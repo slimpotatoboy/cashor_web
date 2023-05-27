@@ -6,12 +6,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Product({ params }) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState();
   const [thumbnail, setThumbnail] = useState();
 
   async function fetchProduct() {
-    setIsLoading(true);
     try {
       setProduct(await AppwriteService.getProduct(params.slug));
       setIsLoading(false);
@@ -20,9 +19,10 @@ export default function Product({ params }) {
       console.log(e);
     }
   }
+  
   async function fetchImage(imageId) {
     try {
-      setThumbnail(await AppwriteService.readImage(imageId));
+      setThumbnail(AppwriteService.readImage(imageId));
     } catch (e) {
       console.log(e);
     }
@@ -46,6 +46,7 @@ export default function Product({ params }) {
           <div className="flex flex-col md:flex-row">
             {!!thumbnail && (
               <div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={thumbnail}
                   alt=""
@@ -54,7 +55,7 @@ export default function Product({ params }) {
               </div>
             )}
             <div className="mt-5 md:mt-0 md:pl-5">
-              <span className="text-sm mb-4 bg-red-600 text-white px-4 py-2 rounded-full inline-block">
+              <span className="text-xs mb-4 bg-red-600 text-white px-4 py-2 rounded-full inline-block">
                 {product.category_name}
               </span>
               <h1 className="text-3xl font-bold">{product.name}</h1>
