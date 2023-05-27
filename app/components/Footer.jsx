@@ -5,7 +5,7 @@ import { Footer } from "flowbite-react";
 export default function FooterBar() {
   return (
     <Footer container>
-      <div className="w-full">
+      <div className="w-full px-0 md:px-20">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div className="mb-5 md:mb-0">
             <Footer.Brand
@@ -26,17 +26,17 @@ export default function FooterBar() {
             <div>
               <Footer.Title title="about" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Cashor App</Footer.Link>
-                <Footer.Link href="#">Appwrite Hackathon</Footer.Link>
+                <Footer.Link href="/about">Cashor App</Footer.Link>
+                <Footer.Link href="https://hashnode.com/hackathons/appwrite" target="_blank">Appwrite Hackathon</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
               <Footer.Title title="Follow Me" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Github</Footer.Link>
-                <Footer.Link href="#">Portfolio</Footer.Link>
-                <Footer.Link href="#">Twitter</Footer.Link>
-                <Footer.Link href="#">Linkedin</Footer.Link>
+                <Footer.Link href="https://github.com/slimpotatoboy" target="_blank">Github</Footer.Link>
+                <Footer.Link href="https://dipenmaharjan.com.np/" target="_blank">Portfolio</Footer.Link>
+                <Footer.Link href="https://twitter.com/slimpotatoboy" target="_blank">Twitter</Footer.Link>
+                <Footer.Link href="https://www.linkedin.com/in/slimpotatoboy/" target="_blank">Linkedin</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>

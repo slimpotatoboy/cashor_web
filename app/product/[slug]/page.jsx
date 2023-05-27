@@ -3,9 +3,11 @@
 import { AppwriteService } from "@/app/AppwriteService";
 import Loader from "@/app/components/Loader";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Product({ params }) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState();
   const [thumbnail, setThumbnail] = useState();
@@ -19,7 +21,7 @@ export default function Product({ params }) {
       console.log(e);
     }
   }
-  
+
   async function fetchImage(imageId) {
     try {
       setThumbnail(AppwriteService.readImage(imageId));
@@ -36,7 +38,13 @@ export default function Product({ params }) {
     if (product != null) {
       fetchImage(product.thumbnail);
     }
-  }, [product]);
+  }, [product, router]);
+
+  useEffect(() => {
+    if (product == null && !isLoading) {
+      router.push("/not-found");
+    }
+  }, [product, router, isLoading]);
 
   return (
     <div className="py-8 px-4 mx-auto max-w-5xl lg:py-16">

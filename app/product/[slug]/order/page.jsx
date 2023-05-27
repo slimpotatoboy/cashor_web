@@ -2,6 +2,7 @@
 
 import { AppwriteService } from "@/app/AppwriteService";
 import Loader from "@/app/components/Loader";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -151,7 +152,7 @@ export default function Order({ params }) {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     defaultValue={product.selling_price}
                     required=""
-                    disabled=""
+                    disabled
                   />
                 </div>
               )}
@@ -185,8 +186,8 @@ export default function Order({ params }) {
                   </div>
                   <div className="ml-3 text-sm">
                     <label htmlFor="remember" className="text-gray-500">
-                      I accept the terms and condtions of Cashor App for
-                      Business.
+                      I accept the <Link href="/" className="text-red-500 hover:underline">terms and condtions</Link> of
+                      Cashor App for Business.
                     </label>
                   </div>
                 </div>
