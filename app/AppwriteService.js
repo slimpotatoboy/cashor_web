@@ -1,4 +1,4 @@
-import { Account, Avatars, Client, Databases, Storage } from "appwrite";
+import { Account, Avatars, Client, Databases, ID, Storage } from "appwrite";
 
 export const AppwriteEndpoint = "https://cloud.appwrite.io/v1";
 export const AppwriteProject = process.env.NEXT_PUBLIC_PROJECT_ID;
@@ -29,9 +29,76 @@ export const AppwriteService = {
     client.headers["X-Fallback-Cookies"] = JSON.stringify(authCookies);
   },
   getProduct: async (slug) => {
-    return await database.getDocument(process.env.NEXT_PUBLIC_DATABASE_ID, process.env.NEXT_PUBLIC_PRODUCT_ID, slug);
+    return await database.getDocument(
+      process.env.NEXT_PUBLIC_DATABASE_ID,
+      process.env.NEXT_PUBLIC_PRODUCT_ID,
+      slug
+    );
   },
   readImage: (id) => {
     return storage.getFilePreview(process.env.NEXT_PUBLIC_STORAGE_ID, id);
-  }
+  },
+  getBusiness: async (id) => {
+    return await database.getDocument(
+      process.env.NEXT_PUBLIC_DATABASE_ID,
+      process.env.NEXT_PUBLIC_BUSINESS_ID,
+      id
+    );
+  },
+  postOrder: async (
+    order_status,
+    payment_method,
+    note,
+    customer_id,
+    business_id
+  ) => {
+    return await database.createDocument(
+      process.env.NEXT_PUBLIC_DATABASE_ID,
+      process.env.NEXT_PUBLIC_ORDERS_ID,
+      ID.unique(),
+      {
+        order_status: order_status,
+        payment_method: payment_method,
+        note: note,
+        customer_id: customer_id,
+        business_id: business_id,
+      }
+    );
+  },
+  createPersonType: async (
+    name,
+    phone,
+    email,
+    address,
+    user_id,
+    business_id
+  ) => {
+    return await database.createDocument(
+      process.env.NEXT_PUBLIC_DATABASE_ID,
+      process.env.NEXT_PUBLIC_PERSONTYPE_ID,
+      ID.unique(),
+      {
+        name: name,
+        phone: phone,
+        email: email,
+        address: address,
+        type: "Customer",
+        user_id: user_id,
+        business_id: business_id,
+      }
+    );
+  },
+  postOrderProducts: async (order_id, product_id, quantity, selling_price) => {
+    return await database.createDocument(
+      process.env.NEXT_PUBLIC_DATABASE_ID,
+      process.env.NEXT_PUBLIC_ORDERS_PRODUCT_ID,
+      ID.unique(),
+      {
+        order_id: order_id,
+        product_id: product_id,
+        quantity: quantity,
+        selling_price: selling_price,
+      }
+    );
+  },
 };
