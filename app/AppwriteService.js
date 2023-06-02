@@ -50,7 +50,8 @@ export const AppwriteService = {
     payment_method,
     note,
     customer_id,
-    business_id
+    business_id,
+    total_price
   ) => {
     return await database.createDocument(
       process.env.NEXT_PUBLIC_DATABASE_ID,
@@ -62,6 +63,7 @@ export const AppwriteService = {
         note: note,
         customer_id: customer_id,
         business_id: business_id,
+        total_price: total_price,
       }
     );
   },
@@ -88,7 +90,14 @@ export const AppwriteService = {
       }
     );
   },
-  postOrderProducts: async (order_id, product_id, quantity, selling_price) => {
+  postOrderProducts: async (
+    order_id,
+    product_id,
+    product_name,
+    quantity,
+    selling_price,
+    total_price,
+  ) => {
     return await database.createDocument(
       process.env.NEXT_PUBLIC_DATABASE_ID,
       process.env.NEXT_PUBLIC_ORDERS_PRODUCT_ID,
@@ -96,8 +105,10 @@ export const AppwriteService = {
       {
         order_id: order_id,
         product_id: product_id,
+        product_name: product_name,
         quantity: quantity,
         selling_price: selling_price,
+        total_price: total_price,
       }
     );
   },

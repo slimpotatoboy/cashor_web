@@ -16,6 +16,7 @@ export default function Order({ params }) {
   const [product, setProduct] = useState();
   const [business, setBusiness] = useState();
   const [isModal, setIsModal] = useState(false);
+  const [totalPrice, setTotalPrice] = useState();
 
   const {
     register,
@@ -50,6 +51,7 @@ export default function Order({ params }) {
 
   useEffect(() => {
     if (product != null) {
+      setTotalPrice(product.selling_price);
       fetchBusiness(product.business_id);
     }
   }, [product]);
@@ -71,18 +73,23 @@ export default function Order({ params }) {
           data.payment_method,
           data.note,
           customer.$id,
-          product.business_id
+          product.business_id,
+          totalPrice,
         );
 
         if (order) {
           const orderProducts = await AppwriteService.postOrderProducts(
             order.$id,
             product.$id,
+            product.name,
             data.quantity,
-            product.selling_price
+            product.selling_price,
+            totalPrice,
           );
+          if (orderProducts) {
+            setIsModal(!isModal);
+          }
           setIsFormLoading(false);
-          setIsModal(!isModal);
         }
       }
     } catch (e) {
@@ -90,12 +97,25 @@ export default function Order({ params }) {
     }
   };
 
+  // const totalPrice = () => watch("quantity");
+
+  const onChangePrice = (e) => {
+    var val = e.target.value * parseInt(product.selling_price);
+    setTotalPrice(val);
+  };
+
   return (
     <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
       {isLoading ? (
         <Loader />
       ) : isModal ? (
-        !!business && <SuccessOrder name={business.name} router={router} setIsModal={setIsModal} />
+        !!business && (
+          <SuccessOrder
+            name={business.name}
+            router={router}
+            setIsModal={setIsModal}
+          />
+        )
       ) : (
         <div>
           <div className="flex items-center mb-4">
@@ -240,7 +260,12 @@ export default function Order({ params }) {
                   placeholder="Quantity"
                   defaultValue="1"
                   required=""
-                  {...register("quantity", { required: true })}
+                  {...register("quantity", {
+                    required: true,
+                    onChange: (val) => {
+                      onChangePrice(val);
+                    },
+                  })}
                 />
                 {errors.quantity && (
                   <small className="text-red-700">Quantity is required</small>
@@ -270,7 +295,7 @@ export default function Order({ params }) {
                     htmlFor="price"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    You&apos;ll be paying Total Price of:
+                    Product Price:
                   </label>
                   <input
                     type="text"
@@ -282,8 +307,26 @@ export default function Order({ params }) {
                   />
                 </div>
               )}
+              {!!product && (
+                <div className="w-full">
+                  <label
+                    htmlFor="price"
+                    className="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    You&apos;ll be paying Total Price of:
+                  </label>
+                  <input
+                    type="text"
+                    id="price"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    defaultValue={totalPrice}
+                    required=""
+                    disabled
+                  />
+                </div>
+              )}
 
-              <div className="sm:col-span-2">
+              <div className="w-full">
                 <label
                   htmlFor="payment_method"
                   className="block mb-2 text-sm font-medium text-gray-900"
