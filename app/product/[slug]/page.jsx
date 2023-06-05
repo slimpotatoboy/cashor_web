@@ -23,7 +23,6 @@ export default function Product({ params }) {
 
   async function fetchBusiness(id) {
     try {
-      
       setBusiness(await AppwriteService.getBusiness(id));
       setIsLoading(false);
     } catch (e) {

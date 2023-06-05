@@ -74,7 +74,7 @@ export default function Order({ params }) {
           data.note,
           customer.$id,
           product.business_id,
-          totalPrice,
+          totalPrice
         );
 
         if (order) {
@@ -84,10 +84,11 @@ export default function Order({ params }) {
             product.name,
             data.quantity,
             product.selling_price,
-            totalPrice,
+            totalPrice
           );
           if (orderProducts) {
             setIsModal(!isModal);
+            AppwriteService.sendEmail(data.name, data.email, business.name,  order.$id,);
           }
           setIsFormLoading(false);
         }

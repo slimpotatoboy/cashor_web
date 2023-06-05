@@ -1,4 +1,13 @@
-import { Account, Avatars, Client, Databases, ID, Storage } from "appwrite";
+import {
+  Account,
+  Avatars,
+  Client,
+  Databases,
+  Functions,
+  ID,
+  Storage,
+} from "appwrite";
+import { data } from "autoprefixer";
 
 export const AppwriteEndpoint = "https://cloud.appwrite.io/v1";
 export const AppwriteProject = process.env.NEXT_PUBLIC_PROJECT_ID;
@@ -10,8 +19,15 @@ const account = new Account(client);
 const avatars = new Avatars(client);
 const database = new Databases(client);
 const storage = new Storage(client);
+const functions = new Functions(client);
 
 export const AppwriteService = {
+  sendEmail: async (name, email, businessName, orderId) => {
+    await functions.createExecution(
+      process.env.NEXT_PUBLIC_FUNCTION_ID,
+      `{"name": "${name}","email": "${email}","business_name": "${businessName}", "order_id": "${orderId}"}`
+    );
+  },
   signOut: async () => {
     await account.deleteSession("current");
   },
@@ -96,7 +112,7 @@ export const AppwriteService = {
     product_name,
     quantity,
     selling_price,
-    total_price,
+    total_price
   ) => {
     return await database.createDocument(
       process.env.NEXT_PUBLIC_DATABASE_ID,
