@@ -3,7 +3,6 @@
 import { AppwriteService } from "@/app/AppwriteService";
 import Loader from "@/app/components/Loader";
 import SuccessOrder from "@/app/components/SuccessOrder";
-import SuccessModal from "@/app/components/SuccessOrder";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -88,7 +87,12 @@ export default function Order({ params }) {
           );
           if (orderProducts) {
             setIsModal(!isModal);
-            AppwriteService.sendEmail(data.name, data.email, business.name,  order.$id,);
+            AppwriteService.sendEmail(
+              data.name,
+              data.email,
+              business.name,
+              order.$id
+            );
           }
           setIsFormLoading(false);
         }
@@ -220,7 +224,13 @@ export default function Order({ params }) {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   placeholder="Enter Your Email Address"
                   required=""
-                  {...register("email", { required: true })}
+                  {...register("email", {
+                    required: true,
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Invalid email address",
+                    },
+                  })}
                 />
                 {errors.email && (
                   <small className="text-red-700">Email is required</small>

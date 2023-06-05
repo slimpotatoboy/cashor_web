@@ -128,4 +128,15 @@ export const AppwriteService = {
       }
     );
   },
+  postPrivateBeta: async (email) => {
+    return await database.createDocument(
+      process.env.NEXT_PUBLIC_DATABASE_ID,
+      process.env.NEXT_PUBLIC_PRIVATEBETA_ID,
+      ID.unique(),
+      {
+        email: email,
+        joined: false,
+      }
+    );
+  },
 };

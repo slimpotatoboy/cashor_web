@@ -1,8 +1,7 @@
 import Link from "next/link";
 import Features from "./components/Features";
-import DownloadCta from "./components/DownloadCta";
+import PrivateBeta from "./components/PrivateBeta";
 import MoreFeatures from "./components/MoreFeatures";
-
 export default function Home() {
   return (
     <div>
@@ -136,7 +135,7 @@ export default function Home() {
 
       <MoreFeatures></MoreFeatures>
       <Features></Features>
-      <DownloadCta></DownloadCta>
+      <PrivateBeta></PrivateBeta>
     </div>
   );
 }
