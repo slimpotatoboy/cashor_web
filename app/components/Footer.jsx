@@ -50,7 +50,7 @@ export default function FooterBar() {
         </div>
         <Footer.Divider />
         <div className="w-full sm:flex sm:items-center sm:justify-center">
-          <Footer.Copyright by="Cashor App For Business" href="#" year={2023} />
+          <Footer.Copyright by="Cashor App For Business" href="/" year={2023} />
         </div>
       </div>
     </Footer>
