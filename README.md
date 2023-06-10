@@ -34,7 +34,6 @@ Cashor supports:
     - Cloud Functions - Dart
     - Storage
 - Vercel
-- Play Store Console
 
 ## App Code Repo
 
