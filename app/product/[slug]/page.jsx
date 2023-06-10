@@ -77,12 +77,12 @@ export default function Product({ params }) {
             </div>
           )}
           <div className="flex flex-col md:flex-row">
-            <div>
+            <div class="w-2/3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`https://cloud.appwrite.io/v1/storage/buckets/${process.env.NEXT_PUBLIC_STORAGE_ID}/files/${product.thumbnail}/preview?project=${process.env.NEXT_PUBLIC_PROJECT_ID}`}
                 alt=""
-                className="h-auto w-full md:w-max rounded-lg"
+                className="h-auto w-full rounded-lg"
               />
             </div>
             <div className="mt-5 md:mt-0 md:pl-5">
