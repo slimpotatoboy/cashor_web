@@ -38,7 +38,7 @@ Cashor supports:
 
 ## App Code Repo
 
-App Code Repo: [Link](https://github.com/slimpotatoboy/cashor_app)
+App Code Repo: [Link](https://github.com/slimpotatoboy/cashor_mobile)
 
 ## Demo Link
 
